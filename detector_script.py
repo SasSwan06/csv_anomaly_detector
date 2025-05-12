@@ -3,14 +3,15 @@ This is an csv data anomaly detector. The user can upload their data and get the
 '''
 import pandas as pd
 import sklearn
-import matplotlib.pyplot as plt 
-import seaborn as sns
+#import matplotlib.pyplot as plt 
+#import seaborn as sns
 
 #Allowing user to upload their csv file.
-#Later on, make this an input?
 file_name = input("Please enter the name of the csv file: ")
 data = pd.read_csv(file_name)
 print(data.head())
+OUTLIER_WARNING_NOTICE = "Please be sure that you would like to delete the outliers as some outliers can present important insights."
+option = input("Do you have a particular way in which you would like the outliers to be detected?\na)IQR\nb)Z-score\nc)Isolation Forest\nd)Default\n")
 
 #Importing  winsorize.
 from scipy.stats.mstats import winsorize
@@ -52,21 +53,26 @@ def handle_outliers(df, column, skew_threshold=0.5, winsorize_limit=0.05):
     print(f"Winsorization applied with limits: {limits}")
     return column
 
+#Filtering the numerical columns.
 numerical_columns = data.select_dtypes(include=['float64', 'int64'])
 
+'''
 for col in numerical_columns.columns:
     data[col] = handle_outliers(data, data[col], skew_threshold = 0.2)
 
 #print(data.head())
-
+'''
+##Currently all functions employ the IQR method to detect outliers
 #Function to determine outliers.
-def detect_outliers(df):
+def count_outliers(df):
     '''
     Currently the function takes the dataset and flags outliers using the IQR method.
     Outliers are values in a dataset that lie 1.5 IQR below the 1st quartile or 1.5 IQR above the third quartile.
     '''
+
     numerical_columns = data.select_dtypes(include=['float64', 'int64'])
     for column in numerical_columns.columns:
+        #Counter keeps track of the number of outliers in a column.
         column_outlier_count = 0 
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)
@@ -82,7 +88,43 @@ def detect_outliers(df):
             print(f"The column {df[column].name} has {column_outlier_count} outliers.")
             #Later, find and add skew to provide more information.
 
-detect_outliers(data)
+
+def detect_outliers(df, column):
+    '''
+    Purpose of this function is to go through a specific column of the data and return the flagged outliers.
+    '''
+    column_outlier_count = 0 
+    skew_level = ""
+    q1 = column.quantile(0.25)
+    q3 = column.quantile(0.75)
+    iqr = q3 - q1
+    iqr_lower = q1 - (1.5 * iqr)
+    iqr_upper = q3 + (1.5 * iqr)
+
+    for value in column:
+        if (value < iqr_lower) or (value > iqr_upper):
+            column_outlier_count += 1
+
+    if column.skew() >= 1:
+        skew_level == "high"
+    elif column.skew() >= 0.5 and column.skew() < 1:
+        skew_level = "moderate"
+    elif column.skew() < 0.5:
+        skew_level = "low"
+    print(f"Column: {column.name}")
+    print(f"Detected {column_outlier_count} outliers.")  
+    print(f"Skew: {column.skew()}") #REDUNDANT!!
+    print(f"Severity of skew: {skew_level}") 
+    #Maybe make a separate function calling the relevant suggested action course.
+    print(f"Suggested Action:")              
+
+#Really wanna convert this to a method, but will do that later. VISION: column.outliersToCsv()
+def outliers_to_csv():
+    return
+    
+detect_outliers(data, data["Kilometers_Driven"])
+
+
 
 
 '''
