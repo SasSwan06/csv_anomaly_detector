@@ -97,10 +97,8 @@ MIT License
 
 ## 👩‍💻 Author
 
-
+LinkedIn: https://www.linkedin.com/in/safura-kasu-544b50281/
+Email: safurakasu@gmail.com
 ---
 
-```
 
-Let me know your GitHub username or repo name if you'd like me to personalize the clone URL or author section. I can also help you create a matching `requirements.txt`, `app.py` starter file, or sample usage gif/screenshot to include in the README.
-```
