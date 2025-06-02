@@ -48,14 +48,16 @@ def detect_missing_values(df):
     Flags columns with missing values.
     '''
     #Displaying the number of rows in the dataset.
+    #Separate functionality?
     number_of_rows = df.shape[0]
     print(f"The total number of rows in your dataset is {number_of_rows}")
     #Traversing through the columns (names only) of the data frame.
     for column in df:
-        #Number of missing values in the column.
+        #Calculating the number of missing values in the column.
         column_null_number = df[column].isnull().sum() 
         #Condition to confirm the presence of outliers.
         if column_null_number != 0:
+            #Statement to flag the outliers in every column
             print(f"The column {column} has {column_null_number} missing values.")
 
 
@@ -109,9 +111,9 @@ def handle_missing_values_imputation(df):
             #If not categorical, fill the column with the mean.
             #####Check for cases when imputing with the median would be better.
             else:
-                    mean_value = df[col].mean() #Calculating the mean.
-                    df[col] = df[col].fillna(mean_value)
-                    print(f"Filled {missing_count} missing values in '{col}' with mean: {mean_value}")
+                    median_value = df[col].median() #Calculating the mean.
+                    df[col] = df[col].fillna(median_value)
+                    print(f"Filled {missing_count} missing values in '{col}' with median: {median_value}")
     return df
 
 def handle_missing_values_constant(df, column, contant_string):
@@ -128,8 +130,11 @@ def handle_missing_values_constant(df, column, contant_string):
 def handle_missing_values_ml(df):
     '''
     Handles missing values by predicting the most likely value using a machine-learning model to predict the most
-    likely next value. Time-consuming? 
+    likely next value. 
+    - Resource-intensive
+    - Will work only if there is enough non-missing data to train on.
     '''
+    
     return
 
 def handle_missing_values_interpolation(df):
