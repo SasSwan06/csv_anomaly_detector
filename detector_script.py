@@ -9,7 +9,7 @@ This is an csv data anomaly detector. The user can upload their data and get the
 #####Work on docstrings.
 #####Is it better practice by convention to have a function return something always?
 #####Special charecters to be cleaned from the string.
-#####DUPLICATES
+#####DUPLICATES - Revise duplicate detection.
 
 #Import statements. Absolutely important to execute in the beginning of every program.
 import pandas as pd
@@ -41,6 +41,22 @@ def clean_numerical_columns(df):
 
         df[column] = df[column].str.replace(r'[a-z/A-Z]+', '', regex=True)
         df[column] = pd.to_numeric(df[column], errors='coerce')
+        
+############################################## DEALING WITH DUPLICATES #####################################################
+def detect_duplicates():
+    '''
+    Flags duplicates.
+    '''
+    duplicates_number = df.duplicated().sum()
+    print(f"There are {duplicates_number} which are as follows:")
+    print(df[df.duplicated()])
+    return
+
+def handle_duplicates_drop(df):
+    '''
+    Handles duplicates by dropping them.
+    '''
+    return df.drop_duplicates()
 
 ######################################### DEALING WITH MISSING VALUES #############################################
 def detect_missing_values(df):
@@ -141,6 +157,7 @@ def handle_missing_values_interpolation(df):
     '''
     Handles missing values by backfill or forwardfill
     '''
+    
     return
 
 def missing_values_to_csv(df):
@@ -250,6 +267,7 @@ def detect_rescaling(df, column):
     '''
     Flags columns requiring normalisation
     '''
+    
     return
 
 #HANDLING RESCALING.
