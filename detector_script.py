@@ -1,15 +1,17 @@
 '''
 This is an csv data anomaly detector. The user can upload their data and get the anomalies listed to them.
 '''
-#####Flag outliers, save them to a dataframe, check if the dataframe is empty, then convert the dataframe to a csv
-#####Check if the column is passed as an appropriate argument. column, column name.
-#####Is printing from a function good practice?
-#####Breaking a line in python.
-#####What is a good ratio to consider dropping?
-#####Work on docstrings.
-#####Is it better practice by convention to have a function return something always?
-#####Special charecters to be cleaned from the string.
-#####DUPLICATES - Revise duplicate detection.
+##### Notes to myself.
+##### Flag outliers, save them to a dataframe, check if the dataframe is empty, then convert the dataframe to a csv
+##### Check if the column is passed as an appropriate argument. column, column name.
+##### Is printing from a function good practice?
+##### Breaking a line in python.
+##### What is a good ratio to consider dropping?
+##### Work on docstrings.
+##### Is it better practice by convention to have a function return something always?
+##### Special characters to be cleaned from the string.
+##### DUPLICATES - Revise duplicate detection.
+##### Review disclaimer statements.
 
 #Import statements. Absolutely important to execute in the beginning of every program.
 import pandas as pd
@@ -56,7 +58,8 @@ def handle_duplicates_drop(df):
     '''
     Handles duplicates by dropping them.
     '''
-    return df.drop_duplicates()
+    df.drop_duplicates(inplace=True)
+    return
 
 ######################################### DEALING WITH MISSING VALUES #############################################
 def detect_missing_values(df):
@@ -98,8 +101,6 @@ def handle_missing_values_imputation(df):
     '''
     Handles missing values by imputing them with a statistical value.
     '''
-    
-    
     """
     Handles missing values in a DataFrame, specific to the data type.
 
@@ -155,7 +156,7 @@ def handle_missing_values_ml(df):
 
 def handle_missing_values_interpolation(df):
     '''
-    Handles missing values by backfill or forwardfill
+    Handles missing values by backfill or forwardfill.
     '''
     
     return
