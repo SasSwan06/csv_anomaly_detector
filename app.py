@@ -27,26 +27,6 @@ def main():
             st.dataframe(outliers_df)
 
             st.success("✅ Anomaly detection completed!")
-
-        #Informing the user. Handling numerical columns with letters.
-'''
-print("Letters including those in units can cause a model to crash. Please go through your data to see if there are any numerical columns that contain units or other letters.")
-cleaning = input("Are there numerical columns with units and letters (Y/N)? ").upper()
-if cleaning == "Y":
-    clean_numerical_columns()
-
-#Informing the user. Handling columns with missing values.
-option = input("Do you have a particular way in which you would like the outliers to be detected?\na)IQR\nb)Z-score\nc)Isolation Forest\nd)Default\n")
-
-
-
-#Informing the user. Handling columns with outliers.
-option = input("Do you have a particular way in which you would like the outliers to be detected?\na)IQR\nb)Z-score\nc)Isolation Forest\nd)Default\n")
-
-#Filtering the numerical columns.
-numerical_columns = data.select_dtypes(include=['float64', 'int64'])
-
-'''
         
         except Exception as e:
             st.error(f"❌ Oops! Something went wrong: {e}")
