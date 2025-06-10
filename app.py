@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from detector_script import detect_outliers,   # adjust this if using a subfolder
+from detector_script import detect_outliers   # adjust this if using a subfolder
 
 def main():
     st.set_page_config(page_title="Anomaly Detection App", page_icon="🕵️‍♀️") #Web page title.
