@@ -11,25 +11,22 @@ def main():
     uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
     if uploaded_file:
-        try:
-            #Reading the file and displaying a preview.
-            df = pd.read_csv(uploaded_file)
-            st.subheader("Data Preview")
-            st.dataframe(df.head())
+        #Reading the file and displaying a preview.
+        df = pd.read_csv(uploaded_file)
+        st.subheader("Data Preview")
+        st.dataframe(df.head())
 
-            cleaned_df = clean_data(df)
-            outliers_df = detect_outliers(cleaned_df)
+            
+        #outliers_df = detect_outliers(cleaned_df)
 
-            st.subheader("🧼 Cleaned Data (Post-Processing)")
-            st.dataframe(cleaned_df)
+        st.subheader("🧼 Cleaned Data (Post-Processing)")
+        st.dataframe(cleaned_df)
 
-            st.subheader("🚨 Detected Outliers")
-            st.dataframe(outliers_df)
+        st.subheader("🚨 Detected Outliers")
+        st.dataframe(outliers_df)
 
-            st.success("✅ Anomaly detection completed!")
+        st.success("✅ Anomaly detection completed!")
         
-        except Exception as e:
-            st.error(f"❌ Oops! Something went wrong: {e}")
     else:
         st.info("📥 Please upload a CSV file to begin.")
 
