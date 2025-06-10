@@ -23,13 +23,14 @@ import pandas as pd
 DISCLAIMER = "This script only deals with anomalies including missing values, outliers and unscaled columns."
 DROP_DISCLAIMER = "Dropping rows can be detrimental to the dataset. Only consider dropping if the number of rows with anomalies is insignificant or if dropping would cause no significant changes to the dataset."
 
+'''
 #Allowing user to upload their csv file.
 file_name = input("Please enter the name of the csv file: ")
 data = pd.read_csv(file_name)
 
 #Printing a preview of the dataset.
 print(data.head())
-
+'''
 ################################## EXTRACTING LETTERS FROM NUMERICAL COLUMNS #######################################
 def clean_numerical_columns(df):
     '''
@@ -254,6 +255,21 @@ def handle_outliers_drop(df):
 
 #Really wanna convert this to a method, but will do that later. VISION: column.outliersToCsv()
 def outliers_to_csv():
+    #Collecting outliers in a dataframe.
+    all_outliers = pd.DataFrame()
+    
+    #For numerical columns.
+    for column_name in df.select_dtypes(include=['float64', 'int64']).columns:
+        if column_outlier_count > 0:
+            outliers = df.loc[outlier_indices].copy()
+            outliers['outlier_column'] = column_name
+            all_outliers = pd.concat([all_outliers, outliers])
+    
+    # Save if any outliers found
+    if not all_outliers.empty:
+        all_outliers.to_csv("flagged_outliers.csv")
+        print("\nAll outliers saved to 'flagged_outliers.csv'")
+    
     return
 
 '''
@@ -280,42 +296,6 @@ def handle_rescaling(df, column):
 
 
 ######################################## END OF ANOMALY HANDLING FUNCTIONS #####################################
-#Informing the user. Handling numerical columns with letters.
-print("Letters including those in units can cause a model to crash. Please go through your data to see if there are any numerical columns that contain units or other letters.")
-cleaning = input("Are there numerical columns with units and letters (Y/N)? ").upper()
-if cleaning == "Y":
-    clean_numerical_columns()
-
-#Informing the user. Handling columns with missing values.
-option = input("Do you have a particular way in which you would like the outliers to be detected?\na)IQR\nb)Z-score\nc)Isolation Forest\nd)Default\n")
-
-
-
-#Informing the user. Handling columns with outliers.
-option = input("Do you have a particular way in which you would like the outliers to be detected?\na)IQR\nb)Z-score\nc)Isolation Forest\nd)Default\n")
-
-#Filtering the numerical columns.
-numerical_columns = data.select_dtypes(include=['float64', 'int64'])
-
-
-
-'''
-#Collecting outliers in a dataframe.
-all_outliers = pd.DataFrame()
-
-#For numerical columns.
-for column_name in df.select_dtypes(include=['float64', 'int64']).columns:
-
-    if column_outlier_count > 0:
-        outliers = df.loc[outlier_indices].copy()
-        outliers['outlier_column'] = column_name
-        all_outliers = pd.concat([all_outliers, outliers])
-
-# Save if any outliers found
-if not all_outliers.empty:
-    all_outliers.to_csv("flagged_outliers.csv")
-    print("\nAll outliers saved to 'flagged_outliers.csv'")
-'''
 
 """
 TEST CODE
