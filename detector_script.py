@@ -38,7 +38,10 @@ def clean_numerical_columns(df, column):
     '''
     #####It is not good practice to rely on user's input in this case, but i will go with this for the initial prototype.
     #####I need to find a better way to identify required columns.
+    df[column] = df[column].astype(str) #####
+
     df[column] = df[column].str.replace(r'[a-z/A-Z]+', '', regex=True)
+    df[column] = df[column].str.replace(r'[^\d.]', '', regex=True) #####
     df[column] = pd.to_numeric(df[column], errors='coerce')
         
 ############################################## DEALING WITH DUPLICATES #####################################################
