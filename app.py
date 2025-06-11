@@ -10,7 +10,7 @@ def main():
     #st.file_uploader allows file upload. But in the main script, you are asking for the name of the file.
     uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
-    if uploaded_file:
+    if uploaded_file is not None:
         #Reading the file and displaying a preview.
         df = pd.read_csv(uploaded_file)
         st.subheader("Data Preview")
