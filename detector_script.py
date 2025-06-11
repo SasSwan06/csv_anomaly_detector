@@ -32,18 +32,14 @@ data = pd.read_csv(file_name)
 print(data.head())
 '''
 ################################## EXTRACTING LETTERS FROM NUMERICAL COLUMNS #######################################
-def clean_numerical_columns(df):
+def clean_numerical_columns(df, column):
     '''
     #DOCSTRING TO BE DONE
     '''
     #####It is not good practice to rely on user's input in this case, but i will go with this for the initial prototype.
     #####I need to find a better way to identify required columns.
-    number = int(input("How many columns? "))
-    for i in range (0, number):
-        column = input("Please enter the names of the column: ")
-
-        df[column] = df[column].str.replace(r'[a-z/A-Z]+', '', regex=True)
-        df[column] = pd.to_numeric(df[column], errors='coerce')
+    df[column] = df[column].str.replace(r'[a-z/A-Z]+', '', regex=True)
+    df[column] = pd.to_numeric(df[column], errors='coerce')
         
 ############################################## DEALING WITH DUPLICATES #####################################################
 def detect_duplicates():
