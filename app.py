@@ -19,13 +19,18 @@ def main():
             
         #outliers_df = detect_outliers(cleaned_df)
         st.subheader("Preparing Numerical Data")
-        option1 = st.radio("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?" , ('Yes', 'No'))
+        st.markdown("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?")
+
         if option1 == 'Yes':
-            number_of_numerical_colums = int(st.text_input("Please enter the number of numerical columns to be cleaned: ", "Type Here ..."))
-            for i in range (0, number_of_numerical_colums):
-                column = st.text_input("Please enter the names of the column: ", "Type Here ...")
-                clean_numerical_columns(df, column)
-            #Previewing the dataset after cleaning the numerical values.     
+            st.subheader("Select Columns to Clean")
+            #Selecting the columns available in the df.
+            available_columns = df.columns.tolist()
+            selected_columns = st.multiselect("Select the numerical columns with messy text to clean:",options=available_columns)
+    
+        if selected_columns:
+            for column in selected_columns:
+                df = clean_numerical_columns(df, column)  # Make sure the function returns the modified df
+                st.success("Columns cleaned successfully!")
             st.dataframe(df.head())
             
         st.subheader("🧼 Cleaned Data (Post-Processing)")
