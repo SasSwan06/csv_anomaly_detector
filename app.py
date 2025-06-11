@@ -15,18 +15,16 @@ def main():
         df = pd.read_csv(uploaded_file)
         st.subheader("Data Preview")
         st.dataframe(df.head())
-
-            
-        #outliers_df = detect_outliers(cleaned_df)
+        
         st.subheader("Preparing Numerical Data")
-        st.markdown("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?")
+        option1 = st.radio("Does your dataset have numerical columns with unwanted letters or characters?", ('Yes', 'No'))
 
         if option1 == 'Yes':
             st.subheader("Select Columns to Clean")
             #Selecting the columns available in the df.
             available_columns = df.columns.tolist()
             selected_columns = st.multiselect("Select the numerical columns with messy text to clean:",options=available_columns)
-    
+        #I dont like this condition.
         if selected_columns:
             for column in selected_columns:
                 df = clean_numerical_columns(df, column)  # Make sure the function returns the modified df
