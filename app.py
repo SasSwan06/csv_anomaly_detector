@@ -19,7 +19,7 @@ def main():
             
         #outliers_df = detect_outliers(cleaned_df)
         st.subheader("Preparing Numerical Data")
-        option1 = st.radio("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?" : ('Yes', 'No'))
+        option1 = st.radio("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?" , ('Yes', 'No'))
         if option1 == 'Yes':
             number = st.text_input("Please enter the number of numerical columns to be cleaned: ", "Type Here ...")
             for i in range (0, number):
