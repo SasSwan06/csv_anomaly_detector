@@ -43,6 +43,7 @@ def clean_numerical_columns(df, column):
     df[column] = df[column].str.replace(r'[a-z/A-Z]+', '', regex=True)
     df[column] = df[column].str.replace(r'[^\d.]', '', regex=True) #####
     df[column] = pd.to_numeric(df[column], errors='coerce')
+    return df
         
 ############################################## DEALING WITH DUPLICATES #####################################################
 def detect_duplicates():
