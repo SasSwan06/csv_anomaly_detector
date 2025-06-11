@@ -21,18 +21,18 @@ def main():
         st.subheader("Preparing Numerical Data")
         option1 = st.radio("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?" , ('Yes', 'No'))
         if option1 == 'Yes':
-            number = int(st.text_input("Please enter the number of numerical columns to be cleaned: ", "Type Here ..."))
-            for i in range (0, number):
+            number_of_numerical_colums = int(st.text_input("Please enter the number of numerical columns to be cleaned: ", "Type Here ..."))
+            for i in range (0, number_of_numerical_colums):
                 column = st.text_input("Please enter the names of the column: ", "Type Here ...")
                 clean_numerical_columns(df, column)
             #Previewing the dataset after cleaning the numerical values.     
             st.dataframe(df.head())
             
         st.subheader("🧼 Cleaned Data (Post-Processing)")
-        st.dataframe(cleaned_df)
+        #st.dataframe(cleaned_df)
 
-        st.subheader("🚨 Detected Outliers")
-        st.dataframe(outliers_df)
+        #st.subheader("🚨 Detected Outliers")
+        #st.dataframe(outliers_df)
 
         st.success("✅ Anomaly detection completed!")
         
