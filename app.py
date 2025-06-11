@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from detector_script import detect_outliers   # adjust this if using a subfolder
+from detector_script import detect_outliers, clean_numerical_columns   # adjust this if using a subfolder
 
 def main():
     st.set_page_config(page_title="Anomaly Detection App", page_icon="🕵️‍♀️") #Web page title.
@@ -18,7 +18,16 @@ def main():
 
             
         #outliers_df = detect_outliers(cleaned_df)
-
+        st.subheader("Preparing Numerical Data")
+        option1 = st.radio("Numerical Data can sometimes come with letters which will cause problems in data processing later. Does your dataset have such columns?" : ('Yes', 'No'))
+        if option1 == 'Yes':
+            number = st.text_input("Please enter the number of numerical columns to be cleaned: ", "Type Here ...")
+            for i in range (0, number):
+                column = st.text_input("Please enter the names of the column: ", "Type Here ...")
+                clean_numerical_columns(df, column)
+            #Previewing the dataset after cleaning the numerical values.     
+            st.dataframe(df.head())
+            
         st.subheader("🧼 Cleaned Data (Post-Processing)")
         st.dataframe(cleaned_df)
 
