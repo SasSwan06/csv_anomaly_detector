@@ -46,7 +46,7 @@ def clean_numerical_columns(df, column):
     return df
         
 ############################################## DEALING WITH DUPLICATES #####################################################
-def detect_duplicates():
+def detect_duplicates(df):
     '''
     Flags duplicates.
     '''
