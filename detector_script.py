@@ -15,6 +15,7 @@ This is an csv data anomaly detector. The user can upload their data and get the
 
 #Import statements. Absolutely important to execute in the beginning of every program.
 import pandas as pd
+import streamlit as st
 #import sklearn
 #import matplotlib.pyplot as plt 
 #import seaborn as sns
@@ -51,8 +52,8 @@ def detect_duplicates(df):
     Flags duplicates.
     '''
     duplicates_number = df.duplicated().sum()
-    print(f"There are {duplicates_number} which are as follows:")
-    print(df[df.duplicated()])
+    st.text(f"There are {duplicates_number} which are as follows:")
+    st.dataframe(df[df.duplicated()])
     return
 
 def handle_duplicates_drop(df):
@@ -70,7 +71,7 @@ def detect_missing_values(df):
     #Displaying the number of rows in the dataset.
     #Separate functionality?
     number_of_rows = df.shape[0]
-    print(f"The total number of rows in your dataset is {number_of_rows}")
+    st.text(f"The total number of rows in your dataset is {number_of_rows}")
     #Traversing through the columns (names only) of the data frame.
     for column in df:
         #Calculating the number of missing values in the column.
@@ -78,7 +79,7 @@ def detect_missing_values(df):
         #Condition to confirm the presence of outliers.
         if column_null_number != 0:
             #Statement to flag the outliers in every column
-            print(f"The column {column} has {column_null_number} missing values.")
+            st.text(f"The column {column} has {column_null_number} missing values.")
 
 
 def handle_missing_values_drop(df):
